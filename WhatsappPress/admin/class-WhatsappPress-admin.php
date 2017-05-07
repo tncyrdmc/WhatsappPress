@@ -113,7 +113,27 @@ class Whatsapppress_Admin {
 			array( 'label_for' => $this->option_name . '_whatsappID', 'intval' )
 		);
 
+		add_settings_field(
+			$this->option_name . '_size',
+			__( 'Control size', 'whatsapppress' ),
+			array( $this, $this->option_name . '_size_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_general',
+			array( 'label_for' => $this->option_name . '_size', 'intval' )
+		);
+
+		add_settings_field(
+			$this->option_name . '_message',
+			__( 'Default message', 'whatsapppress' ),
+			array( $this, $this->option_name . '_message_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_general',
+			array( 'label_for' => $this->option_name . '_message')
+		);
+
 		register_setting( $this->plugin_name, $this->option_name . '_whatsappID');
+		register_setting( $this->plugin_name, $this->option_name . '_size');
+		register_setting( $this->plugin_name, $this->option_name . '_message');
 	}
 
 	/**
@@ -122,7 +142,9 @@ class Whatsapppress_Admin {
 	 * @since  1.0.0
 	 */
 	public function whatsapppress_general_cb() {
+
 		echo '<p>' . __( 'Please change the settings accordingly. For more information see <a href="https://www.whatsapp.com/faq/en/general/26000030">Whatsapp FAQ</a>', 'whatsapppress' ) . '</p>';
+	
 	}
 
 	/**
@@ -131,8 +153,34 @@ class Whatsapppress_Admin {
 	 * @since  1.0.0
 	 */
 	public function whatsapppress_whatsappID_cb() {
+
 		$whatsappID = get_option( $this->option_name . '_whatsappID' );
 		echo '<input type="text" name="' . $this->option_name . '_whatsappID' . '" id="' . $this->option_name . '_whatsappID' . '" value="' . $whatsappID . '"> ';
+	
+	}
+
+	/**
+	 * Render the input box for control size
+	 *
+	 * @since  1.0.0
+	 */
+	public function whatsapppress_size_cb() {
+
+		$size = get_option( $this->option_name . '_size', "50" );
+		echo '<input type="text" name="' . $this->option_name . '_size' . '" id="' . $this->option_name . '_size' . '" value="' . $size . '"> '.__( 'Pixel', 'whatsapppress' );
+		
+	}
+
+	/**
+	 * Render the input box for control size
+	 *
+	 * @since  1.0.0
+	 */
+	public function whatsapppress_message_cb() {
+
+		$msg = get_option( $this->option_name . '_message', "Hi there!" );
+		echo '<textarea name="' . $this->option_name . '_message" id="' . $this->option_name . '_message" cols="30" rows="4">'.$msg.'</textarea>';
+		
 	}
 
 	/**
