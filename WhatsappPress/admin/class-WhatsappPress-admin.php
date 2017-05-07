@@ -3,11 +3,11 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
+ * @link       http://abeltra.me/
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @package    Whatsapppress
+ * @subpackage Whatsapppress/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
- * @author     Your Name <email@example.com>
+ * @package    Whatsapppress
+ * @subpackage Whatsapppress/admin
+ * @author     ABeltramo <beltramo.ale@gmail.com>
  */
-class Plugin_Name_Admin {
+class Whatsapppress_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -41,6 +41,15 @@ class Plugin_Name_Admin {
 	private $version;
 
 	/**
+	 * The options name to be used in this plugin
+	 *
+	 * @since  	1.0.0
+	 * @access 	private
+	 * @var  	string 		$option_name 	Option name of this plugin
+	 */
+	private $option_name = 'whatsapppress';
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -55,6 +64,78 @@ class Plugin_Name_Admin {
 	}
 
 	/**
+	 * Add an options page under the Settings submenu
+	 *
+	 * @since  1.0.0
+	 */
+	public function add_options_page() {
+
+		$this->plugin_screen_hook_suffix = add_options_page(
+			__( 'WhatsappPress Settings', 'whatsapppress' ),
+			__( 'WhatsappPress', 'whatsapppress' ),
+			'manage_options',
+			$this->plugin_name,
+			array( $this, 'display_options_page' )
+		);
+
+	}
+
+	/**
+	 * Render the options page for plugin
+	 *
+	 * @since  1.0.0
+	 */
+	public function display_options_page() {
+		include_once 'partials/whatsapppress-admin-display.php';
+	}
+
+	/**
+	 * Save the settings in admin page
+	 *
+	 * @since  1.0.0
+	 */
+	public function register_setting() {
+
+		// Add a General section
+		add_settings_section(
+			$this->option_name . '_general',
+			__( 'General', 'whatsapppress' ),
+			array( $this, $this->option_name . '_general_cb' ),
+			$this->plugin_name
+		);
+
+		add_settings_field(
+			$this->option_name . '_whatsappID',
+			__( 'Phone number', 'whatsapppress' ),
+			array( $this, $this->option_name . '_whatsappID_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_general',
+			array( 'label_for' => $this->option_name . '_whatsappID', 'intval' )
+		);
+
+		register_setting( $this->plugin_name, $this->option_name . '_whatsappID');
+	}
+
+	/**
+	 * Render the text for the general section
+	 *
+	 * @since  1.0.0
+	 */
+	public function whatsapppress_general_cb() {
+		echo '<p>' . __( 'Please change the settings accordingly.', 'whatsapppress' ) . '</p>';
+	}
+
+	/**
+	 * Render the input box for whatsappID
+	 *
+	 * @since  1.0.0
+	 */
+	public function whatsapppress_whatsappID_cb() {
+		$whatsappID = get_option( $this->option_name . '_whatsappID' );
+		echo '<input type="text" name="' . $this->option_name . '_whatsappID' . '" id="' . $this->option_name . '_whatsappID' . '" value="' . $whatsappID . '"> ';
+	}
+
+	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
@@ -65,15 +146,15 @@ class Plugin_Name_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * defined in Whatsapppress_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Plugin_Name_Loader will then create the relationship
+		 * The Whatsapppress_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/whatsapppress-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +169,15 @@ class Plugin_Name_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * defined in Whatsapppress_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Plugin_Name_Loader will then create the relationship
+		 * The Whatsapppress_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/whatsapppress-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
