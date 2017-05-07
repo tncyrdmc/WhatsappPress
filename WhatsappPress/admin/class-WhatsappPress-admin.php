@@ -122,7 +122,7 @@ class Whatsapppress_Admin {
 	 * @since  1.0.0
 	 */
 	public function whatsapppress_general_cb() {
-		echo '<p>' . __( 'Please change the settings accordingly.', 'whatsapppress' ) . '</p>';
+		echo '<p>' . __( 'Please change the settings accordingly. For more information see <a href="https://www.whatsapp.com/faq/en/general/26000030">Whatsapp FAQ</a>', 'whatsapppress' ) . '</p>';
 	}
 
 	/**

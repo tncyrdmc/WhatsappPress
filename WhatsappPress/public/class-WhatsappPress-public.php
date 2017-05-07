@@ -41,6 +41,15 @@ class Whatsapppress_Public {
 	private $version;
 
 	/**
+	 * The options name to be used in this plugin
+	 *
+	 * @since  	1.0.0
+	 * @access 	private
+	 * @var  	string 		$option_name 	Option name of this plugin
+	 */
+	private $option_name = 'whatsapppress';
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -98,6 +107,23 @@ class Whatsapppress_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/whatsapppress-public.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Add the whatsapp button to the public site
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_whatsapp_button(){
+
+		$whatsappID = get_option( $this->option_name . '_whatsappID', "" );
+		$message = urlencode(get_option( $this->option_name . '_message', "Hi there!" ));
+		$size = get_option( $this->option_name . '_size' , "50px" );
+		echo "<div class='whatsappPress'>
+				<a href='https://api.whatsapp.com/send?phone=" . $whatsappID . "&text=$message'>
+					<img width='$size' height='$size' src='" . plugin_dir_url( __FILE__ ) . "resources/whatsapp.svg'></img>
+				</a>
+			</div>";
 	}
 
 }

@@ -2,3 +2,9 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ .whatsappPress {
+     position:fixed; 
+     z-index: 99999999;
+     bottom:10px; 
+     right: 10px;
+ }
