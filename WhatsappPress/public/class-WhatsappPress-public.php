@@ -119,8 +119,21 @@ class Whatsapppress_Public {
 		$whatsappID = get_option( $this->option_name . '_whatsappID', "" );
 		$message = urlencode(get_option( $this->option_name . '_message', "Hi there!" ));
 		$size = get_option( $this->option_name . '_size' , "50" );
-		echo "<div class='whatsappPress'>
-				<a href='https://api.whatsapp.com/send?phone=" . $whatsappID . "&text=$message'>
+		$position = get_option( $this->option_name . '_position' );
+		$margin = get_option( $this->option_name . '_margin', "10px" );
+
+		if($position == "topleft"){
+			$position = "top:".$margin."; left:".$margin;
+		} else if($position == "topright"){
+			$position = "top:".$margin."; right:".$margin;
+		} else if($position == "bottomright"){
+			$position = "bottom:".$margin."; right:".$margin;
+		} else {
+			$position = "bottom:".$margin."; left:".$margin;
+		}
+
+		echo "<div class='whatsappPress' style='$position'>
+				<a target='blank' href='https://api.whatsapp.com/send?phone=" . $whatsappID . "&text=$message'>
 					<img width='".$size."px' height='".$size."px' src='" . plugin_dir_url( __FILE__ ) . "resources/whatsapp.svg'></img>
 				</a>
 			</div>";

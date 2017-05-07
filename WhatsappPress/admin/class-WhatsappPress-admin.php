@@ -98,21 +98,41 @@ class Whatsapppress_Admin {
 
 		// Add a General section
 		add_settings_section(
-			$this->option_name . '_general',
-			__( 'General', 'whatsapppress' ),
+			$this->option_name . '_wp',
+			__( 'Whatsapp API', 'whatsapppress' ),
 			array( $this, $this->option_name . '_general_cb' ),
 			$this->plugin_name
 		);
 
+		// Phone number
 		add_settings_field(
 			$this->option_name . '_whatsappID',
 			__( 'Phone number', 'whatsapppress' ),
 			array( $this, $this->option_name . '_whatsappID_cb' ),
 			$this->plugin_name,
-			$this->option_name . '_general',
+			$this->option_name . '_wp',
 			array( 'label_for' => $this->option_name . '_whatsappID', 'intval' )
 		);
 
+		// Default message
+		add_settings_field(
+			$this->option_name . '_message',
+			__( 'Default message', 'whatsapppress' ),
+			array( $this, $this->option_name . '_message_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_wp',
+			array( 'label_for' => $this->option_name . '_message')
+		);
+
+		// Add a General section
+		add_settings_section(
+			$this->option_name . '_general',
+			__( 'Button style', 'whatsapppress' ),
+			array( $this, $this->option_name . '_button_style_cb' ),
+			$this->plugin_name
+		);
+
+		// Size of control
 		add_settings_field(
 			$this->option_name . '_size',
 			__( 'Control size', 'whatsapppress' ),
@@ -122,18 +142,20 @@ class Whatsapppress_Admin {
 			array( 'label_for' => $this->option_name . '_size', 'intval' )
 		);
 
+		// Position of button
 		add_settings_field(
-			$this->option_name . '_message',
-			__( 'Default message', 'whatsapppress' ),
-			array( $this, $this->option_name . '_message_cb' ),
+			$this->option_name . '_position',
+			__( 'Position of button', 'whatsapppress' ),
+			array( $this, $this->option_name . '_position_cb' ),
 			$this->plugin_name,
 			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_message')
+			array( 'label_for' => $this->option_name . '_position')
 		);
 
 		register_setting( $this->plugin_name, $this->option_name . '_whatsappID');
 		register_setting( $this->plugin_name, $this->option_name . '_size');
 		register_setting( $this->plugin_name, $this->option_name . '_message');
+		register_setting( $this->plugin_name, $this->option_name . '_position');
 	}
 
 	/**
@@ -143,7 +165,7 @@ class Whatsapppress_Admin {
 	 */
 	public function whatsapppress_general_cb() {
 
-		echo '<p>' . __( 'Please change the settings accordingly. For more information see <a href="https://www.whatsapp.com/faq/en/general/26000030">Whatsapp FAQ</a>', 'whatsapppress' ) . '</p>';
+		echo '<p>' . __( 'For more information see <a href="https://www.whatsapp.com/faq/en/general/26000030">Whatsapp FAQ</a>', 'whatsapppress' ) . '</p>';
 	
 	}
 
@@ -167,8 +189,19 @@ class Whatsapppress_Admin {
 	public function whatsapppress_size_cb() {
 
 		$size = get_option( $this->option_name . '_size', "50" );
-		echo '<input type="text" name="' . $this->option_name . '_size' . '" id="' . $this->option_name . '_size' . '" value="' . $size . '"> '.__( 'Pixel', 'whatsapppress' );
+		echo '<input type="number" name="' . $this->option_name . '_size' . '" id="' . $this->option_name . '_size' . '" value="' . $size . '"> '.__( 'Pixel', 'whatsapppress' );
 		
+	}
+
+	/**
+	 * Render the text for the general section
+	 *
+	 * @since  1.0.0
+	 */
+	public function whatsapppress_button_style_cb() {
+
+		echo '<p>' . __( 'This options modify the style of the button in the page', 'whatsapppress' ) . '</p>';
+	
 	}
 
 	/**
@@ -181,6 +214,35 @@ class Whatsapppress_Admin {
 		$msg = get_option( $this->option_name . '_message', "Hi there!" );
 		echo '<textarea name="' . $this->option_name . '_message" id="' . $this->option_name . '_message" cols="30" rows="4">'.$msg.'</textarea>';
 		
+	}
+
+	public function whatsapppress_position_cb() {
+		$position = get_option( $this->option_name . '_position', "bottomright" );
+
+		?>
+			<fieldset>
+				<label>
+					<input type="radio" name="<?php echo $this->option_name . '_position' ?>" id="<?php echo $this->option_name . '_position' ?>" value="topleft" <?php checked( $position, 'topleft' ); ?>>
+					<?php _e( 'Top Left', 'outdated-notice' ); ?>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="<?php echo $this->option_name . '_position' ?>" value="topright" <?php checked( $position, 'topright' ); ?>>
+					<?php _e( 'Top Right', 'outdated-notice' ); ?>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="<?php echo $this->option_name . '_position' ?>" value="bottomright" <?php checked( $position, 'bottomright' ); ?>>
+					<?php _e( 'Bottom Right', 'outdated-notice' ); ?>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="<?php echo $this->option_name . '_position' ?>" value="bottomleft" <?php checked( $position, 'bottomleft' ); ?>>
+					<?php _e( 'Bottom Left', 'outdated-notice' ); ?>
+				</label>
+			</fieldset>
+		<?php
+
 	}
 
 	/**
