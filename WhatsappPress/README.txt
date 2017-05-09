@@ -29,8 +29,5 @@ As simple as:
 
 == Donate ==
 
-This is free software, if you like it you can consider making a donation using the button below.  
-<a target="blank" href="https://www.paypal.me/abeltramo/">
-    <img src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_donate_92x26.png" alt="paypal" style="max-width:100%;">
-</a>
+This is free software, if you like it you can consider to make a donation. 
 <br>Made with love by <a href="http://abeltra.me/">ABeltramo</a>, you can <a href="https://github.com/ABeltramo/WhatsappPress">fork it</a> on Github
