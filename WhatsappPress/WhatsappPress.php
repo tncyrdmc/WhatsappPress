@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       WhatsappPress
  * Plugin URI:        https://github.com/ABeltramo/WhatsappPress
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       Wordpress plugin wich show a Whatsapp badge to start a conversation.
+ * Version:           1.0.2
  * Author:            ABeltramo
  * Author URI:        http://abeltra.me/
  * License:           GPL-2.0+
