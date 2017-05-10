@@ -3,7 +3,5 @@
  * included in this file.
  */
  .whatsappPress {
-     position:fixed; 
-     z-index: 99999999;
-     margin: 10px;
+     position:fixed;
  }

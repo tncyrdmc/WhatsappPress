@@ -152,10 +152,21 @@ class Whatsapppress_Admin {
 			array( 'label_for' => $this->option_name . '_position')
 		);
 
+		// Position of button
+		add_settings_field(
+			$this->option_name . '_z_index',
+			__( 'z-index', 'whatsapppress' ),
+			array( $this, $this->option_name . '_z_index_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_general',
+			array( 'label_for' => $this->option_name . '_z_index', 'intval')
+		);
+
 		register_setting( $this->plugin_name, $this->option_name . '_whatsappID');
 		register_setting( $this->plugin_name, $this->option_name . '_size');
 		register_setting( $this->plugin_name, $this->option_name . '_message');
 		register_setting( $this->plugin_name, $this->option_name . '_position');
+		register_setting( $this->plugin_name, $this->option_name . '_z_index');
 	}
 
 	/**
@@ -216,6 +227,12 @@ class Whatsapppress_Admin {
 		
 	}
 
+
+	/**
+	 * Render the position radio boxes
+	 *
+	 * @since  1.0.0
+	 */
 	public function whatsapppress_position_cb() {
 		$position = get_option( $this->option_name . '_position', "bottomright" );
 
@@ -243,6 +260,18 @@ class Whatsapppress_Admin {
 			</fieldset>
 		<?php
 
+	}
+
+	/**
+	 * Render the position radio boxes
+	 *
+	 * @since  1.0.2
+	 */
+	 public function whatsapppress_z_index_cb() {
+
+		$zindex = get_option( $this->option_name . '_z_index', "99" );
+		echo '<input type="number" name="' . $this->option_name . '_z_index' . '" id="' . $this->option_name . '_z_index' . '" value="' . $zindex . '"> <a href="https://www.w3schools.com/cssref/pr_pos_z-index.asp" target="blank">?</a>';
+		
 	}
 
 	/**

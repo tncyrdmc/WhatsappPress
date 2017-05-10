@@ -117,10 +117,11 @@ class Whatsapppress_Public {
 	public function add_whatsapp_button(){
 
 		$whatsappID = get_option( $this->option_name . '_whatsappID', "" );
-		$message = urlencode(get_option( $this->option_name . '_message', "Hi there!" ));
+		$message = rawurlencode(get_option( $this->option_name . '_message', "Hi there!" ));
 		$size = get_option( $this->option_name . '_size' , "50" );
 		$position = get_option( $this->option_name . '_position' );
 		$margin = get_option( $this->option_name . '_margin', "10px" );
+		$zindex = get_option( $this->option_name . '_z_index', "10px" );
 
 		if($position == "topleft"){
 			$position = "top:".$margin."; left:".$margin;
@@ -132,7 +133,7 @@ class Whatsapppress_Public {
 			$position = "bottom:".$margin."; left:".$margin;
 		}
 
-		echo "<div class='whatsappPress' style='$position'>
+		echo "<div class='whatsappPress' style='$position; z-index:$zindex;'>
 				<a target='blank' href='https://api.whatsapp.com/send?phone=" . $whatsappID . "&text=$message'>
 					<img width='".$size."px' height='".$size."px' src='" . plugin_dir_url( __FILE__ ) . "resources/whatsapp.svg'></img>
 				</a>
